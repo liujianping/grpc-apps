@@ -1,0 +1,3 @@
+[submodule "iosDemo"]
+	path = iosDemo
+	url = git@github.com:liujianping/iosDemo.git
