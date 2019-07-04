@@ -66,18 +66,22 @@ $: mkdir proto
 $: cat <<EOF > proto/hello.proto
 syntax = "proto3";
 
-package hello;
+option java_multiple_files = true;
+option java_package = "io.grpc.gitdig.helloworld";
+option java_outer_classname = "HelloWorldProto";
+
+package helloworld;
+
+service Greeter {
+  rpc SayHello (HelloRequest) returns (HelloReply) {}
+}
 
 message HelloRequest {
-  string greeting = 1;
+  string name = 1;
 }
 
-message HelloResponse {
-  string reply = 1;
-}
-
-service HelloService {
-  rpc SayHello(HelloRequest) returns (HelloResponse);
+message HelloReply {
+  string message = 1;
 }
 EOF
 ````

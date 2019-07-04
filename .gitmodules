@@ -1,3 +1,6 @@
 [submodule "iosDemo"]
 	path = iosDemo
 	url = git@github.com:liujianping/iosDemo.git
+[submodule "androidDemo"]
+	path = androidDemo
+	url = git@github.com:liujianping/androidDemo.git
