@@ -13,7 +13,7 @@
 
 - [x] [iOS 应用实现 gRPC 调用](docs/research.01.md)
 - [ ] GoMobile 在 iOS 上的应用
-- [ ] Android 应用实现 gRPC 调用
+- [x] [Android 应用实现 gRPC 调用](docs/research.03.md)
 - [ ] GoMobile 在 Android 上的应用
 - [ ] C/S 架构 or 静态库
 

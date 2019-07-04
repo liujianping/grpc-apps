@@ -67,7 +67,7 @@ $: cat <<EOF > proto/hello.proto
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "io.grpc.gitdig.helloworld";
+option java_package = "com.gitdig.helloworld";
 option java_outer_classname = "HelloWorldProto";
 
 package helloworld;
