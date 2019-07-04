@@ -1,7 +1,7 @@
 package main
 
 import (
-	pb "github.com/liujianping/grpc-apps/go/hello"
+	pb "github.com/liujianping/grpc-apps/go/helloworld"
 )
 
 import (
@@ -16,10 +16,10 @@ import (
 type HelloServer struct{}
 
 // SayHello says 'hi' to the user.
-func (hs *HelloServer) SayHello(ctx context.Context, req *pb.HelloRequest) (*pb.HelloResponse, error) {
+func (hs *HelloServer) SayHello(ctx context.Context, req *pb.HelloRequest) (*pb.HelloReply, error) {
 	// create response
-	res := &pb.HelloResponse{
-		Reply: fmt.Sprintf("hello %s from go", req.Greeting),
+	res := &pb.HelloReply{
+		Message: fmt.Sprintf("hello %s from go", req.Name),
 	}
 
 	return res, nil
@@ -29,7 +29,7 @@ func main() {
 	var err error
 
 	// create socket listener
-	l, err := net.Listen("tcp", ":8833")
+	l, err := net.Listen("tcp", ":50051")
 	if err != nil {
 		log.Fatalf("error: %v\n", err)
 	}
@@ -39,9 +39,9 @@ func main() {
 
 	// register server with grpc
 	s := grpc.NewServer()
-	pb.RegisterHelloServiceServer(s, helloServer)
+	pb.RegisterGreeterServer(s, helloServer)
 
-	log.Println("server serving at: :8833")
+	log.Println("server serving at: :50051")
 	// run
 	s.Serve(l)
 }

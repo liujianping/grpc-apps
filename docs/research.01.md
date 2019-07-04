@@ -1,9 +1,5 @@
 # iOS 应用实现 gRPC 调用
 
-> 在开发手机应用的时候，通常会将复杂的业务逻辑层实现放在服务端，客户端仅负责表现层。但是存在某些重隐私的手机应用，业务逻辑的实现位于服务端是存在安全隐患。此时，面对不同系统的手机客户端，单独重复实现业务逻辑，对于人力与代码维护而言，均非最佳实践。如何通过第三方语言将业务逻辑封装成库的形式，并以静态打包的方式提供给客户端使用，是本次调研的目的。
-
-本文是调研的第一部分，关于 iOS 应用调用 gRPC 服务的验证。本次调研的所有项目代码均存放于: [liujianping/grpc-apps](https://github.com/liujianping/grpc-apps)项目中。
-
 ## 1. 环境安装
 
 作为一名非专职 iOS 的程序员，经常需要调研陌生的技术或者语言。首先是要克服对于未知的畏惧心理。其实很多东西没那么难，只是需要开始而已。 为了完成目标调研，开始第一部分的调研工作。以文字形式记录下来，方便后来者。
@@ -107,7 +103,7 @@ $: protoc -I proto proto/hello.proto --go_out=plugins=grpc:./go/hello/
 package main
 
 import (
-	pb "github.com/liujianping/grpc-apps/go/hello"
+	pb "github.com/liujianping/grpc-apps/go/helloworld"
 )
 
 import (
@@ -122,10 +118,10 @@ import (
 type HelloServer struct{}
 
 // SayHello says 'hi' to the user.
-func (hs *HelloServer) SayHello(ctx context.Context, req *pb.HelloRequest) (*pb.HelloResponse, error) {
+func (hs *HelloServer) SayHello(ctx context.Context, req *pb.HelloRequest) (*pb.HelloReply, error) {
 	// create response
-	res := &pb.HelloResponse{
-		Reply: fmt.Sprintf("hello %s from go", req.Greeting),
+	res := &pb.HelloReply{
+		Message: fmt.Sprintf("hello %s from go", req.Name),
 	}
 
 	return res, nil
@@ -135,7 +131,7 @@ func main() {
 	var err error
 
 	// create socket listener
-	l, err := net.Listen("tcp", ":8833")
+	l, err := net.Listen("tcp", ":50051")
 	if err != nil {
 		log.Fatalf("error: %v\n", err)
 	}
@@ -145,9 +141,9 @@ func main() {
 
 	// register server with grpc
 	s := grpc.NewServer()
-	pb.RegisterHelloServiceServer(s, helloServer)
+	pb.RegisterGreeterServer(s, helloServer)
 
-	log.Println("server serving at: :8833")
+	log.Println("server serving at: :50051")
 	// run
 	s.Serve(l)
 }
@@ -159,7 +155,7 @@ func main() {
 ````bash
 $: cd grpc-apps/go
 $: go run server/server.go
-2019/07/03 20:31:06 server serving at: :8833
+2019/07/03 20:31:06 server serving at: :50051
 ````
 
 ### 3.2 Go 客户端
@@ -170,7 +166,7 @@ $: go run server/server.go
 package main
 
 import (
-	pb "github.com/liujianping/grpc-apps/go/hello"
+	pb "github.com/liujianping/grpc-apps/go/helloworld"
 )
 
 import (
@@ -185,17 +181,17 @@ func main() {
 	var err error
 
 	// connect to server
-	conn, err := grpc.Dial("localhost:8833", grpc.WithInsecure())
+	conn, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("error: %v\n", err)
 	}
 	defer conn.Close()
 
 	// create client
-	client := pb.NewHelloServiceClient(conn)
+	client := pb.NewGreeterClient(conn)
 
 	// create request
-	req := &pb.HelloRequest{Greeting: "JayL"}
+	req := &pb.HelloRequest{Name: "JayL"}
 
 	// call method
 	res, err := client.SayHello(context.Background(), req)
@@ -204,7 +200,7 @@ func main() {
 	}
 
 	// handle response
-	fmt.Printf("Received: \"%s\"\n", res.Reply)
+	fmt.Printf("Received: \"%s\"\n", res.Message)
 }
 
 ````
@@ -312,12 +308,12 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        let client = Hello_HelloServiceServiceClient(address: ":8833", secure: false)
-        var req = Hello_HelloRequest()
-        req.greeting = "iOS"
+        let client = Helloworld_GreeterServiceClient(address: ":50051", secure: false)
+        var req = Helloworld_HelloRequest()
+        req.name = "JayL"
         do {
             let resp = try client.sayHello(req)
-            print("resp: \(resp.reply)")
+            print("resp: \(resp.message)")
         } catch {
             print("error: \(error.localizedDescription)")
         }

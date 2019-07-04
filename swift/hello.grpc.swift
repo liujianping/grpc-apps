@@ -25,31 +25,31 @@ import Dispatch
 import SwiftGRPC
 import SwiftProtobuf
 
-internal protocol Hello_HelloServiceSayHelloCall: ClientCallUnary {}
+internal protocol Helloworld_GreeterSayHelloCall: ClientCallUnary {}
 
-fileprivate final class Hello_HelloServiceSayHelloCallBase: ClientCallUnaryBase<Hello_HelloRequest, Hello_HelloResponse>, Hello_HelloServiceSayHelloCall {
-  override class var method: String { return "/hello.HelloService/SayHello" }
+fileprivate final class Helloworld_GreeterSayHelloCallBase: ClientCallUnaryBase<Helloworld_HelloRequest, Helloworld_HelloReply>, Helloworld_GreeterSayHelloCall {
+  override class var method: String { return "/helloworld.Greeter/SayHello" }
 }
 
 
-/// Instantiate Hello_HelloServiceServiceClient, then call methods of this protocol to make API calls.
-internal protocol Hello_HelloServiceService: ServiceClient {
+/// Instantiate Helloworld_GreeterServiceClient, then call methods of this protocol to make API calls.
+internal protocol Helloworld_GreeterService: ServiceClient {
   /// Synchronous. Unary.
-  func sayHello(_ request: Hello_HelloRequest) throws -> Hello_HelloResponse
+  func sayHello(_ request: Helloworld_HelloRequest) throws -> Helloworld_HelloReply
   /// Asynchronous. Unary.
-  func sayHello(_ request: Hello_HelloRequest, completion: @escaping (Hello_HelloResponse?, CallResult) -> Void) throws -> Hello_HelloServiceSayHelloCall
+  func sayHello(_ request: Helloworld_HelloRequest, completion: @escaping (Helloworld_HelloReply?, CallResult) -> Void) throws -> Helloworld_GreeterSayHelloCall
 
 }
 
-internal final class Hello_HelloServiceServiceClient: ServiceClientBase, Hello_HelloServiceService {
+internal final class Helloworld_GreeterServiceClient: ServiceClientBase, Helloworld_GreeterService {
   /// Synchronous. Unary.
-  internal func sayHello(_ request: Hello_HelloRequest) throws -> Hello_HelloResponse {
-    return try Hello_HelloServiceSayHelloCallBase(channel)
+  internal func sayHello(_ request: Helloworld_HelloRequest) throws -> Helloworld_HelloReply {
+    return try Helloworld_GreeterSayHelloCallBase(channel)
       .run(request: request, metadata: metadata)
   }
   /// Asynchronous. Unary.
-  internal func sayHello(_ request: Hello_HelloRequest, completion: @escaping (Hello_HelloResponse?, CallResult) -> Void) throws -> Hello_HelloServiceSayHelloCall {
-    return try Hello_HelloServiceSayHelloCallBase(channel)
+  internal func sayHello(_ request: Helloworld_HelloRequest, completion: @escaping (Helloworld_HelloReply?, CallResult) -> Void) throws -> Helloworld_GreeterSayHelloCall {
+    return try Helloworld_GreeterSayHelloCallBase(channel)
       .start(request: request, metadata: metadata, completion: completion)
   }
 

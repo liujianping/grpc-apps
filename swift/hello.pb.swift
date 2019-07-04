@@ -19,24 +19,26 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
-struct Hello_HelloRequest {
+/// The request message containing the user's name.
+struct Helloworld_HelloRequest {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var greeting: String = String()
+  var name: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 }
 
-struct Hello_HelloResponse {
+/// The response message containing the greetings
+struct Helloworld_HelloReply {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var reply: String = String()
+  var message: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -45,61 +47,61 @@ struct Hello_HelloResponse {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate let _protobuf_package = "hello"
+fileprivate let _protobuf_package = "helloworld"
 
-extension Hello_HelloRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+extension Helloworld_HelloRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".HelloRequest"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "greeting"),
+    1: .same(proto: "name"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
-      case 1: try decoder.decodeSingularStringField(value: &self.greeting)
+      case 1: try decoder.decodeSingularStringField(value: &self.name)
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.greeting.isEmpty {
-      try visitor.visitSingularStringField(value: self.greeting, fieldNumber: 1)
+    if !self.name.isEmpty {
+      try visitor.visitSingularStringField(value: self.name, fieldNumber: 1)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  func _protobuf_generated_isEqualTo(other: Hello_HelloRequest) -> Bool {
-    if self.greeting != other.greeting {return false}
+  func _protobuf_generated_isEqualTo(other: Helloworld_HelloRequest) -> Bool {
+    if self.name != other.name {return false}
     if unknownFields != other.unknownFields {return false}
     return true
   }
 }
 
-extension Hello_HelloResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".HelloResponse"
+extension Helloworld_HelloReply: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".HelloReply"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "reply"),
+    1: .same(proto: "message"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
-      case 1: try decoder.decodeSingularStringField(value: &self.reply)
+      case 1: try decoder.decodeSingularStringField(value: &self.message)
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.reply.isEmpty {
-      try visitor.visitSingularStringField(value: self.reply, fieldNumber: 1)
+    if !self.message.isEmpty {
+      try visitor.visitSingularStringField(value: self.message, fieldNumber: 1)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  func _protobuf_generated_isEqualTo(other: Hello_HelloResponse) -> Bool {
-    if self.reply != other.reply {return false}
+  func _protobuf_generated_isEqualTo(other: Helloworld_HelloReply) -> Bool {
+    if self.message != other.message {return false}
     if unknownFields != other.unknownFields {return false}
     return true
   }

@@ -1,7 +1,7 @@
 package main
 
 import (
-	pb "github.com/liujianping/grpc-apps/go/hello"
+	pb "github.com/liujianping/grpc-apps/go/helloworld"
 )
 
 import (
@@ -16,17 +16,17 @@ func main() {
 	var err error
 
 	// connect to server
-	conn, err := grpc.Dial("localhost:8833", grpc.WithInsecure())
+	conn, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("error: %v\n", err)
 	}
 	defer conn.Close()
 
 	// create client
-	client := pb.NewHelloServiceClient(conn)
+	client := pb.NewGreeterClient(conn)
 
 	// create request
-	req := &pb.HelloRequest{Greeting: "JayL"}
+	req := &pb.HelloRequest{Name: "JayL"}
 
 	// call method
 	res, err := client.SayHello(context.Background(), req)
@@ -35,5 +35,5 @@ func main() {
 	}
 
 	// handle response
-	fmt.Printf("Received: \"%s\"\n", res.Reply)
+	fmt.Printf("Received: \"%s\"\n", res.Message)
 }
