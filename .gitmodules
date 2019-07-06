@@ -4,3 +4,6 @@
 [submodule "androidDemo"]
 	path = androidDemo
 	url = git@github.com:liujianping/androidDemo.git
+[submodule "golib"]
+	path = golib
+	url = git@github.com:liujianping/golib.git

@@ -51,7 +51,7 @@ protected void onCreate(Bundle savedInstanceState) {
 
 在 Android 项目中，通过 proto 文件生成 java 代码的过程和 iOS 与 Go 的过程不一样，没有直接用到 `protoc` 命令行工具。而是通过 `protobuf-gradle-plugin` 插件的方式，在 Gradle 构建过程中自动生成。
 
-![](images/android01.png)
+![](../images/android01.png)
 
 首先配置插件以及 Gradle 构建过程, 将项目左栏视图切换成 `Android`,在 Gradle 脚本栏中，首先修改 `Project: androidDemo` 项目级 `build.gradle`文件。增加 `protobuf-gradle-plugin` 插件支持。
 
@@ -143,11 +143,11 @@ dependencies {
 
 以上 Gradle 脚本的配置就能实现构建过程中，通过 proto 文件自动生成 java 代码了。 不过需要注意的就是，proto 文件的位置是固定的。再次将左侧视图切换到 Project 视图。proto 文件的位置：`app/src/main/proto` 文件夹。
 
-![](images/android02.png)
+![](../images/android02.png)
 
 proto 文件夹与 proto 文件均通过手动创建。完成了以上过程，现在就可以构建一次项目，看看 java 文件是否生成。再切换会 Android 视图，就会发现生成的代码已经有了。
 
-![](images/android03.png)
+![](../images/android03.png)
 
 ### 3.3 实现 gRPC 客户端调用
 

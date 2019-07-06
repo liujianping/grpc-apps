@@ -12,9 +12,13 @@
 具体调研内容包括:
 
 - [x] [iOS 应用实现 gRPC 调用](docs/research.01.md)
-- [ ] GoMobile 在 iOS 上的应用
 - [x] [Android 应用实现 gRPC 调用](docs/research.03.md)
-- [ ] GoMobile 在 Android 上的应用
+- [ ] GoMobile SDK 在 iOS & Android 上的集成
+- [ ] GoMobile SDK 在 iOS & Android 上的边界
 - [ ] C/S 架构 or 静态库
 
 其中关于 gRPC 在 iOS 与 Android 的实现，本身官方就已经提供了样例。本次调研会用到相关内容，所以将其作为调研的一部分记录下来，方便后来者阅读。调研中所有涉及的项目代码均存放于: [liujianping/grpc-apps](https://github.com/liujianping/grpc-apps) 仓库中， 需要的朋友可以直接下载测试。
+
+理想目标图：
+
+![](images/aim.png)
